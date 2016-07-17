@@ -1,15 +1,40 @@
-<!DOCTYPE html>
-<html lang = "en-us">
-<head>
-<meta character="utf-8">
-<meta http-equiv="X-UA-Compatible" content="JE=edge">
-<meta name="viewport" content="width=device-with, initial-scale=1">
+{% extends 'base.html' %}
 
-	<title>
-		My awsome note app
-	</title>
-</head>
-<body>
-	<h1>Hello PH</h1>
-</body>
-</html>
+{% block title %}Notes{% endblock title %}
+
+{% block content %}
+
+{#Create note form #}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form class="inline-form" action="{% url 'index' %}" method="post">
+					{% csrf_token %}
+					<input type="text" class="form-control clear-focus-highlight" id="txtNewNote" name="title" placeholder="take a note ...">
+					<input class="btn btn-raised btn-primary btn-sm" type="submit" value="create">
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{#display notes#}
+<div class="container">
+	<div class="row">
+		{% for note in notes%}
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>{{note.title}}</strong>
+				</div>
+				<div class="panel-body">
+					{{note.note}}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock content %}
